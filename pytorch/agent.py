@@ -25,8 +25,10 @@ else:
 
 
 class QAgent():
-    def __init__(self, env, config, model_class):
+    def __init__(self, env, seed, config, model_class):
         self.env = env
+        self.seed = seed
+        env.seed(seed)
         self.model_dir = Path('./models')
         self.model_class = model_class
         self.config_file = config
@@ -205,8 +207,8 @@ class QAgent():
                     reward_in_episode = 0
                     N = min(10, len(self.episode_durations))
                     progress_bar.set_postfix({
-                        "reward": np.mean(self.reward_in_episode[-N:]),
-                        "steps": np.mean(self.episode_durations[-N:]),
+                        "reward": np.mean(self.reward_in_episode[-1:]),
+                        "steps": np.mean(self.episode_durations[-1:]),
                         "epsilon": epsilon
                         })
                     # self.plot_durations()
@@ -327,10 +329,10 @@ class QAgent():
         labs = [l.get_label() for l in lines]
         ax1.legend(lines, labs, loc=3)
 
-        with open("./mean_rewards.pkl", "wb") as f:
+        with open("./mean_rewards" + str(self.seed) + ".pkl", "wb") as f:
             pickle.dump(mean_reward, f, protocol=pickle.HIGHEST_PROTOCOL)
         
-        with open("./mean_steps.pkl", "wb") as f:
+        with open("./mean_steps" + str(self.seed) + ".pkl", "wb") as f:
             pickle.dump(mean_steps, f, protocol=pickle.HIGHEST_PROTOCOL)
 
         if is_notebook:

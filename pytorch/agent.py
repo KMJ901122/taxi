@@ -45,7 +45,7 @@ class QAgent():
         self.last_step = 0
         self.last_episode = 0
         self.id = int(time.time())
-        self.lr = config.training.learning_rate
+        self.lr = self.config.training.learning_rate
 
         if not os.path.exists(self.model_dir):
             os.makedirs(self.model_dir)

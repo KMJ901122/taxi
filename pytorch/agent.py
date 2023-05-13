@@ -212,7 +212,8 @@ class QAgent():
                     progress_bar.set_postfix({
                         "reward": np.mean(self.reward_in_episode[-1:]),
                         "steps": np.mean(self.episode_durations[-1:]),
-                        "epsilon": epsilon
+                        "epsilon": epsilon,
+                        "learning rate": self.lr,
                         })
                     # self.plot_durations()
                     break

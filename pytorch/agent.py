@@ -45,6 +45,7 @@ class QAgent():
         self.last_step = 0
         self.last_episode = 0
         self.id = int(time.time())
+        self.lr = config.training.learning_rate
 
         if not os.path.exists(self.model_dir):
             os.makedirs(self.model_dir)
@@ -102,6 +103,8 @@ class QAgent():
         lr = base + delta * np.exp(-episode / rate)
         for param_group in self.optimizer.param_groups:
             param_group['lr'] = lr
+
+        self.lr = lr
 
     def _train_model(self):
         if len(self.memory) < self.config.training.batch_size:
@@ -283,7 +286,8 @@ class QAgent():
                         "episode": current_episode,
                         "reward": np.mean(self.reward_in_episode[-N:]),
                         "steps": np.mean(self.episode_durations[-N:]),
-                        "epsilon": epsilon
+                        "epsilon": epsilon,
+                        "learning rate": self.lr,
                         })
                     self.plot_durations()
 

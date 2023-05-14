@@ -4,7 +4,7 @@ from config import Config
 from model import DQN
 from agent import QAgent
 
-env = gym.make("Taxi-v3").env
+env = gym.make("Taxi-v3")
 config = "config_pytorch.yaml"
 for i in range(10):
     agent = QAgent(env=env, seed=i, config=config, model_class=DQN)

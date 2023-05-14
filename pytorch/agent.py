@@ -180,6 +180,7 @@ class QAgent():
         for i_episode in progress_bar:
             # Initialize the environment and state
             state = self.env.reset()
+            self.env.render()
             if i_episode >= self.config.training.warmup_episode:
                 epsilon = self._get_epsilon(i_episode - self.config.training.warmup_episode)
 

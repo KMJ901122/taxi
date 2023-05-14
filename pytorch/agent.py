@@ -179,7 +179,6 @@ class QAgent():
 
         for i_episode in progress_bar:
             # Initialize the environment and state
-            self.env.seed(0)
             state = self.env.reset()
             if i_episode >= self.config.training.warmup_episode:
                 epsilon = self._get_epsilon(i_episode - self.config.training.warmup_episode)
@@ -208,6 +207,8 @@ class QAgent():
                     self.episode_durations.append(step + 1)
                     self.reward_in_episode.append(reward_in_episode)
                     self.epsilon_vec.append(epsilon)
+                    if reward_in_episode > 9:
+                        self.env.render()
                     reward_in_episode = 0
                     N = min(10, len(self.episode_durations))
                     progress_bar.set_postfix({
